@@ -1,0 +1,29 @@
+body {
+    padding-top: 6rem;
+    width: 100%;
+}
+
+.starter-template,
+.jumbotron {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+.jumbotron {
+    margin: 3rem auto -9.5rem auto;
+}
+
+.log {
+    text-align: right;
+}
+
+#footer {
+    position: fixed;
+    text-align: center;
+    padding: .8rem 0;
+    background-color: #343a40;
+    color: #FFF;
+    bottom: 0;
+    width: 100%;
+    height: 3rem;
+}

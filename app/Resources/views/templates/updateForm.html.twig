@@ -1,0 +1,27 @@
+% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="wrapper">
+        <div id="container">
+
+            {% if users %}
+
+                <form action="/updateUser/{{ users[0]["id"] }}" method="POST">
+                    <label for="name">First Name</label>
+                    <input type="text" id="name" name="name" value="{{ users[0]["name"] }}"/>
+                    <label for="lastname">First Name</label>
+                    <input type="text" id="lastname" name="lastname" value="{{ users[0]["lastname"] }}"/>
+                    <label for="email">First Name</label>
+                    <input type="text" id="email" name="email" value="{{ users[0]["email"] }}"/>
+                    <input type="submit"/>
+                </form>
+
+            {% else %}
+                Can't find this user!
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock body %}

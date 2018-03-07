@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    {% set authed = app.session.get('isLoggedIn') %} 
+
+                    {# If statements for active class #}
+                    <li class="nav-item {% if app.request.attributes.get('_route') == 'homepage' %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('homepage') }}">Home</a>
+                    </li>
+
+                    {% if authed == 'true' or is_granted('ROLE_USER') %}
+                    <li class="nav-item {% if app.request.attributes.get('_route') == 'userspage' %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('userspage') }}">Users</a>
+                    </li>
+
+                    <li class="nav-item {% if app.request.attributes.get('_route') == 'hellopage' %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('hellopage') }}">Hello</a>
+                    </li>
+
+                    <li class="nav-item {% if app.request.attributes.get('_route') == 'productpage' %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('productpage') }}">Products</a>
+                    </li>
+
+                    <li class="nav-item {% if app.request.attributes.get('_route') == 'registerForm' %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('registerForm') }}">Register Form</a>
+                    </li>
+                    {% endif %}
+     
+
+                    {% if authed == 'true' %} 
+                        <li class="nav-item log {% if app.request.attributes.get('_route') == 'delete' %}active{% endif %}">
+                            <a class="nav-link" href="{{ path('delete') }}">Logout</a>
+                        </li>
+
+                    {% elseif is_granted('ROLE_USER') %} 
+                        <li class="nav-item log">
+                            <a class="nav-link" href="{{ path('fos_user_security_logout') }}">Logout</a>
+                        </li>
+
+                    {% else %}
+                        <li class="nav-item log {% if app.request.attributes.get('_route') == 'googleloginform' %}active{% endif %}">
+                            <a class="nav-link" href="{{ path('fos_user_security_login') }}">Login</a>
+                        </li>
+                        <li class="nav-item log {% if app.request.attributes.get('_route') == 'googleloginform' %}active{% endif %}">
+                            <a class="nav-link" href="{{ path('googleloginform') }}">Social Login</a>
+                        </li> 
+                    {% endif %}
+                    
+                </ul>
+            </div>
+        </nav>
+
+        <div role="main" class="container">
+
+
+            {% block body %}{% endblock %}
+
+            
+        </div><!-- /.container -->
+
+        <div id="footer">
+
+            {% block footer %}
+               {% include('templates/footer.html.twig') %}
+            {% endblock %}
+
+        </div>
+
+        {% block javascripts %}
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script type="text/javascript" src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/popper.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>
